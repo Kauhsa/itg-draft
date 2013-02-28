@@ -7,10 +7,10 @@ songs = []
 
 for row in reader:
     song = {
-        'name': row[0],
+        'pack': row[0],
         'difficulty': row[1],
         'style': row[2],
-        'block': row[3],
+        'rating': row[3],
         'title': row[4],
         'subtitle': row[5]
     }
