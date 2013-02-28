@@ -9,7 +9,7 @@ ITGRandom = (function(){
     var i$, ref$, len$, song, ref1$, results$ = [];
     for (i$ = 0, len$ = (ref$ = this.songdata).length; i$ < len$; ++i$) {
       song = ref$[i$];
-      if (start_rating >= (ref1$ = song.rating) && ref1$ >= end_rating) {
+      if (start_rating <= (ref1$ = song.rating) && ref1$ <= end_rating) {
         results$.push(song);
       }
     }
