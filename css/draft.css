@@ -6,12 +6,10 @@ body {
 
 #container {
     width: 1024px;
-    height: 768px;
     position: absolute;
     left: 50%;
-    top: 50%;
+    top: 20px;
     margin-left: -512px;
-    margin-top: -384px;
 }
 
 .player_name {
