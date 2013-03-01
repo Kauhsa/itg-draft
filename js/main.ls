@@ -3,7 +3,7 @@ load_template = (id) ->
     Handlebars.compile source
 
 $ ->
-    uniqs = unique_values(SONGS)
+    uniqs = unique_values(CHARTDATA.charts)
     settings =
         * label: 'Packs'
           options: uniqs.pack
@@ -19,6 +19,5 @@ $ ->
 
     chart_table_template = load_template('#chart-table-template')
     $('#chart-table-container').html(chart_table_template {
-        songs: SONGS
+        songs: CHARTDATA.charts
     })
-

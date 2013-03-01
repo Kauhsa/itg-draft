@@ -6,7 +6,7 @@ load_template = function(id){
 };
 $(function(){
   var uniqs, settings, settings_template, chart_table_template;
-  uniqs = unique_values(SONGS);
+  uniqs = unique_values(CHARTDATA.charts);
   settings = [
     {
       label: 'Packs',
@@ -25,6 +25,6 @@ $(function(){
   }));
   chart_table_template = load_template('#chart-table-template');
   return $('#chart-table-container').html(chart_table_template({
-    songs: SONGS
+    songs: CHARTDATA.charts
   }));
 });
