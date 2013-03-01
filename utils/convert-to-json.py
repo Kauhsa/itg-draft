@@ -16,4 +16,4 @@ for row in reader:
     }
     songs.append(song)
 
-print(json.dumps(songs, sort_keys=True, indent=4))
+print('SONGS = ' + json.dumps(songs))

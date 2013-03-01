@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.3/handlebars.min.js"></script>
+        <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+        <script src="js/songdata.js"></script>
+        <script src="js/utils.js"></script>
+        <script src="js/main.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="well" id="settings-form-container">
+            </div>
+            <div id="chart-table-container">
+            </div>
+        </div>
+
+        <script type="text/x-handlebars-template" id="settings-template">
+            <form class="form-horizontal" action="#">
+                {{#each settings}}
+                    <div class="control-group">
+                        <label class="control-label">{{this.label}}:</label>
+                        <div class="controls">
+                            <div class="btn-group" data-toggle="buttons-checkbox">
+                                {{#each this.options}}
+                                    <button class="btn">{{this}}</button>
+                                {{/each}}
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+            </form>
+        </script>
+
+        <script type="text/x-handlebars-template" id="chart-table-template">
+            <table class="table">
+                <tr>
+                    <thead>
+                        <tr>
+                            <th>Pack</th>
+                            <th>Title</th>
+                            <th>Style</th>
+                            <th>Difficulty</th>
+                            <th>Rating</th>
+                        </tr>
+                    </thead>
+                </tr>
+                {{#each songs}}
+                    <tr>
+                        <td>{{this.pack}}</td>
+                        <td>{{this.title}} <i>{{this.subtitle}}</i></td>
+                        <td>{{this.style}}</td>
+                        <td>{{this.difficulty}}</td>
+                        <td>{{this.rating}}</td>
+                    </tr>
+                {{/each}}
+            </table>
+        </script>
+    </body>
+</html>
