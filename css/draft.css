@@ -5,11 +5,9 @@ body {
 }
 
 #container {
-    width: 1024px;
+    width: 100%;
     position: absolute;
-    left: 50%;
     top: 20px;
-    margin-left: -512px;
 }
 
 .player_name {
