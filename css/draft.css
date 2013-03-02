@@ -55,15 +55,15 @@ label {
     opacity: 0.8;
 }
 
-.info_text .ban, .info_text .favor {
+.info_text .downvote, .info_text .upvote {
     font-weight: bold;
 }
 
-.info_text .ban {
+.info_text .downvote {
     color: #F00;
 }
 
-.info_text .favor {
+.info_text .upvote {
     color: #0F0;
 }
 
@@ -105,11 +105,11 @@ label {
     color: #ddf;
 }
 
-.chart.ban {
+.chart.downvote {
     background-color: rgba(150, 0, 0, 0.2);
 }
 
-.chart.favor {
+.chart.upvote {
     background-color: rgba(0, 150, 0, 0.2);
 }
 

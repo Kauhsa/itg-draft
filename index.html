@@ -38,10 +38,10 @@
             <div class="center_area">
                 <span class="info_text">
                     Waiting for
-                    {{#if isBanTurn}}
-                        <span class="ban">ban</span>
+                    {{#if isUpvoteTurn}}
+                        <span class="upvote">upvote</span>
                     {{else}}
-                        <span class="favor">favor</span>
+                        <span class="downvote">downvote</span>
                     {{/if}}
                 </span>
                 {{#each c in charts}}

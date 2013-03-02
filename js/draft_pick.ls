@@ -4,10 +4,10 @@ getRandomCharts = (min, max, count) ->
     Ember.A [Ember.Object.create(obj) for obj in charts]
 
 PICK_STATES = [
-    ['one', 'ban']
-    ['two', 'ban']
-    ['two', 'favor']
-    ['one', 'favor']
+    ['one', 'downvote']
+    ['two', 'downvote']
+    ['two', 'upvote']
+    ['one', 'upvote']
 ]
 
 window.App = Ember.Application.create!
@@ -61,11 +61,11 @@ App.PickingController = Ember.Controller.extend {
     isPlayerTwoTurn: (->
         this.get('currentState')[0] == 'two').property('currentState')
 
-    isBanTurn: (->
-        this.get('currentState')[1] == 'ban').property('currentState')
+    isUpvoteTurn: (->
+        this.get('currentState')[1] == 'upvote').property('currentState')
 
-    isFavorTurn: (->
-        this.get('currentState')[1] == 'favor').property('currentState')
+    isDownvoteTurn: (->
+        this.get('currentState')[1] == 'downvote').property('currentState')
 
     nextState: ->
         this.set('currentStateIndex', this.get('currentStateIndex') + 1)

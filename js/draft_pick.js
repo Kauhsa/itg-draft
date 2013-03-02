@@ -19,7 +19,7 @@ getRandomCharts = function(min, max, count){
     return results$;
   }()));
 };
-PICK_STATES = [['one', 'ban'], ['two', 'ban'], ['two', 'favor'], ['one', 'favor']];
+PICK_STATES = [['one', 'downvote'], ['two', 'downvote'], ['two', 'upvote'], ['one', 'upvote']];
 window.App = Ember.Application.create();
 App.Router.map(function(){
   this.route('settings', {
@@ -75,11 +75,11 @@ App.PickingController = Ember.Controller.extend({
   isPlayerTwoTurn: function(){
     return this.get('currentState')[0] === 'two';
   }.property('currentState'),
-  isBanTurn: function(){
-    return this.get('currentState')[1] === 'ban';
+  isUpvoteTurn: function(){
+    return this.get('currentState')[1] === 'upvote';
   }.property('currentState'),
-  isFavorTurn: function(){
-    return this.get('currentState')[1] === 'favor';
+  isDownvoteTurn: function(){
+    return this.get('currentState')[1] === 'downvote';
   }.property('currentState'),
   nextState: function(){
     return this.set('currentStateIndex', this.get('currentStateIndex') + 1);
