@@ -23,11 +23,21 @@
             <div class="center_area">
                 <h1>Draft Pick Settings</h1>
                 <form>
-                    <label>Player one name: {{view Ember.TextField valueBinding="playerOneName"}}</label>
-                    <label>Player two name: {{view Ember.TextField valueBinding="playerTwoName"}}</label>
-                    <label>Minimum block rating: {{view Ember.TextField valueBinding="minimumRating"}}</label>
-                    <label>Maximum block rating: {{view Ember.TextField valueBinding="maximumRating"}}</label>
-                    <label>Number of charts: {{view Ember.TextField valueBinding="numberOfCharts"}}</label>
+                    <div class="form_field">
+                        <label>Player 1 name:</label> {{view Ember.TextField valueBinding="playerOneName"}}
+                    </div>
+                    <div class="form_field">
+                        <label>Player 2 name:</label> {{view Ember.TextField valueBinding="playerTwoName"}}
+                    </div>
+                    <div class="form_field">
+                        <label>Minimum block rating:</label> {{view Ember.TextField valueBinding="minimumRating"}}
+                    </div>
+                    <div class="form_field">
+                        <label>Maximum block rating:</label> {{view Ember.TextField valueBinding="maximumRating"}}
+                    </div>
+                    <div class="form_field">
+                        <label>Number of charts:</label> {{view Ember.TextField valueBinding="numberOfCharts"}}
+                    </div>
                     <button {{action "goToPicking"}}>Go!</button>
                 </form>
             </div>

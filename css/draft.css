@@ -5,7 +5,23 @@ body {
 }
 
 label {
-    display: block;
+    text-align: left;
+    display: inline-block;
+    width: 180px;
+}
+
+input {
+    border-radius: 3px;
+    padding: 4px 6px;
+    border: none;
+}
+
+button {
+    margin: 5px;
+}
+
+.form_field {
+    margin: 3px;
 }
 
 #container {
@@ -16,7 +32,7 @@ label {
 .player_names {
     font-size: 20pt;
     margin-bottom: 4px;
-    color: rgba(255, 255, 255, 0.3)
+    color: rgba(255, 255, 255, 0.3);
 }
 
 .player_name {
