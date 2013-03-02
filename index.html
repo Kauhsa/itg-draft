@@ -32,10 +32,11 @@
         </script>
 
         <script type="text/x-handlebars" data-template-name="picking">
-            <span {{bindAttr class=":player_name :one isPlayerOneTurn:active"}}>{{ playerOneName }}</span>
-            <span {{bindAttr class=":player_name :two isPlayerTwoTurn:active"}}>{{ playerTwoName }}</span>
-
             <div class="center_area">
+                <div class="player_names">
+                    <span {{bindAttr class=":player_name isPlayerOneTurn:active"}}>{{ playerOneName }}</span> versus
+                    <span {{bindAttr class=":player_name isPlayerTwoTurn:active"}}>{{ playerTwoName }}</span>
+                </div>
                 <span class="info_text">
                     {{#if isPickingPhase}}
                         Waiting for
