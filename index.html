@@ -30,13 +30,13 @@
                         <label>Player 2 name:</label> {{view Ember.TextField valueBinding="playerTwoName"}}
                     </div>
                     <div class="form_field">
-                        <label>Minimum block rating:</label> {{view Ember.TextField valueBinding="minimumRating"}}
+                        <label>Minimum block rating:</label> {{view Ember.TextField valueBinding="minimumRating" type="number"}}
                     </div>
                     <div class="form_field">
-                        <label>Maximum block rating:</label> {{view Ember.TextField valueBinding="maximumRating"}}
+                        <label>Maximum block rating:</label> {{view Ember.TextField valueBinding="maximumRating" type="number"}}
                     </div>
                     <div class="form_field">
-                        <label>Number of charts:</label> {{view Ember.TextField valueBinding="numberOfCharts"}}
+                        <label>Number of charts:</label> {{view Ember.TextField valueBinding="numberOfCharts" type="number"}}
                     </div>
                     <button {{action "goToPicking"}}>Go!</button>
                 </form>
