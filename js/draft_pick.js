@@ -71,7 +71,7 @@ App.SettingsController = Ember.Controller.extend({
   playerTwoName: 'Player 2',
   minimumRating: '9',
   maximumRating: '11',
-  numberOfCharts: '5',
+  numberOfCharts: '6',
   pickingModel: function(){
     return {
       'player_one': this.get('playerOneName'),
