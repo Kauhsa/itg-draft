@@ -1,37 +1,53 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>In The Groove ~ Draft Pick</title>
+        <title>In The Groove - Draft Pick</title>
         <link href="http://cdnjs.cloudflare.com/ajax/libs/normalize/2.1.0/normalize.css" rel="stylesheet">
         <link href='http://fonts.googleapis.com/css?family=Maven+Pro' rel='stylesheet' type='text/css'>
         <link href="css/draft.css" rel="stylesheet">
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.3/handlebars.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/ember.js/1.0.0-rc.1/ember.min.js"></script>
+        <script src="js/utils.js"></script>
+        <script src="js/charts.js"></script>
         <script src="js/draft_pick.js"></script>
     </head>
     <body>
-        <div id="container">
-            <span class="player_name one"></span>
-            <span class="player_name two"></span>        
-            <div class="center_area">
-                <span class="info_text">Waiting for First to ban a chart</span>
-                <div class="chart">
-                    <span class="title">July</span>
-                    <span class="subtitle">-Euromix-</span>
-                    <span class="rating expert">X9</span>
-                </div>
-                <div class="chart">
-                    <span class="title">Summer</span>
-                </div>
-                <div class="chart">
-                    <span class="title">Soapy Bubble</span>
-                </div>
-                <div class="chart">
-                    <span class="title">Hybrid</span>
-                </div>
-                <div class="chart">
-                    <span class="title">Pandemonium</span>
-                </div>
+        <script type="text/x-handlebars">
+            <div id="container">
+                {{outlet}}
             </div>
-        </div>
+        </script>
+
+        <script type="text/x-handlebars" data-template-name="settings">
+            <div class="center_area">
+                <h1>Draft Pick Settings</h1>
+                <label>Player one name: {{view Ember.TextField valueBinding="playerOneName"}}</label>
+                <label>Player two name: {{view Ember.TextField valueBinding="playerTwoName"}}</label>
+                <label>Minimum block rating: {{view Ember.TextField valueBinding="minimumRating"}}</label>
+                <label>Maximum block rating: {{view Ember.TextField valueBinding="maximumRating"}}</label>
+                <label>Number of charts: {{view Ember.TextField valueBinding="numberOfCharts"}}</label>
+                <button {{action "goToPicking"}}>Go!</button>
+            </div>
+        </script>
+
+        <script type="text/x-handlebars" data-template-name="picking">
+            <span {{bindAttr class=":player_name :one isPlayerOneTurn:active"}}>{{ playerOneName }}</span>
+            <span {{bindAttr class=":player_name :two isPlayerTwoTurn:active"}}>{{ playerTwoName }}</span>
+
+            <div class="center_area">
+                <span class="info_text"></span>
+                {{#each c in charts}}
+                    {{#view App.ChartView chartBinding="c" pickingControllerBinding="this"}}
+                        <div {{bindAttr class=":chart view.chart.player view.chart.action"}} {{action "clickChart" target="view"}}>
+                            <span class="title">{{ view.chart.title }}</span>
+                            <span class="subtitle">{{ view.chart.subtitle }}</span>
+                            <span class="rating expert">{{ view.chart.rating }}</span>
+                        </div>
+                    {{/view}}
+                {{/each}}
+            </div>
+        </script>
+        
     </body>
 </html>

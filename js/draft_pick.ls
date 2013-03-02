@@ -1,69 +1,62 @@
-PLAYER_ONE_NAME = \Kauhsa
-PLAYER_TWO_NAME = \Rangifer
+getRandomCharts = (min, max) ->
+    charts = [chart for chart in CHARTDATA.charts when min <= chart.rating <= max]
+    charts = random_items charts, 5
+    Ember.A [Ember.Object.create(obj) for obj in charts]
 
-PLAYER_ONE = 0
-PLAYER_TWO = 1
+PICK_STATES = [
+    ['one', 'ban']
+    ['two', 'ban']
+    ['two', 'favor']
+    ['one', 'favor']
+]
 
-BAN = 0
-FAVOR = 1
+window.App = Ember.Application.create!
 
-STATES =
-    [PLAYER_ONE, BAN]
-    [PLAYER_TWO, BAN]
-    [PLAYER_TWO, FAVOR]
-    [PLAYER_ONE, FAVOR]
+App.Router.map ->
+    this.route 'settings' {path: '/'}
+    this.resource 'picking' {path: '/pick'}
 
-current_state_index = -1
+App.ChartView = Ember.View.extend {
+    chart: null
+    pickingController: null
+    clickChart: ->
+        pickingController = this.get 'pickingController'
+        chart = this.get('chart')
+        currentState = pickingController.get 'currentState'
+        if not chart.get 'player'
+            chart.set 'player' currentState[0]
+            chart.set 'action' currentState[1]
+            pickingController.nextState!
+}
 
-next_state = ->
-    current_state_index += 1
-    if current_state_index >= STATES.length
-        $('.player_name.one').removeClass 'active'
-        $('.player_name.two').removeClass 'active'
-        $(\.info_text).text 'Chart selection done!'
-        return
+App.SettingsController = Ember.Controller.extend {
+    playerOneName: ''
+    playerTwoName: ''
+    minimumRating: ''
+    maximumRating: ''
+    numberOfCharts: '5'
 
-    state = STATES[current_state_index]
-    if state[0] == PLAYER_ONE
-        $('.player_name.one').addClass 'active'
-        $('.player_name.two').removeClass 'active'
-        player_name = PLAYER_ONE_NAME
-    else
-        $('.player_name.two').addClass 'active'
-        $('.player_name.one').removeClass 'active'
-        player_name = PLAYER_TWO_NAME
+    goToPicking: ->
+        pickingController = this.controllerFor 'picking'
+        pickingController.set 'playerOneName' this.get('playerOneName')
+        pickingController.set 'playerTwoName' this.get('playerTwoName')
+        pickingController.set 'currentStateIndex' 0
+        charts = getRandomCharts this.get('minimumRating'), this.get('maximumRating')
+        pickingController.set 'charts' charts
+        this.transitionTo 'picking'
+}
 
-    if state[1] == BAN
-        action = 'ban'
-    else
-        action = 'select'
-
-    text = 'Waiting for ' + player_name + ' to ' + action + ' a chart'
-    $(\.info_text).text text
-
-$ ->
-    $(\.chart).click ->
-        if current_state_index >= STATES.length
-            return
-        if $(this).hasClass 'one' or $(this).hasClass 'two'
-            return
-
-        state = STATES[current_state_index]
-
-        if state[0] == PLAYER_ONE
-            player_class = 'one'
-        else
-            player_class = 'two'
-
-        if state[1] == BAN
-            action_class = 'ban'
-        else
-            action_class = 'favor'
-
-        $(this).addClass player_class
-        $(this).addClass action_class
-        next_state!
-
-    $(\.player_name.one).text PLAYER_ONE_NAME
-    $(\.player_name.two).text PLAYER_TWO_NAME
-    next_state!
+App.PickingController = Ember.Controller.extend {
+    playerOneName: null
+    playerTwoName: null
+    charts: null
+    currentStateIndex: 0
+    currentState: (->
+        PICK_STATES[this.get 'currentStateIndex']).property('currentStateIndex')
+    isPlayerOneTurn: (->
+        this.get('currentState')[0] == 'one').property('currentState')
+    isPlayerTwoTurn: (->
+        this.get('currentState')[0] == 'two').property('currentState')
+    nextState: ->
+        this.set('currentStateIndex', this.get('currentStateIndex') + 1)
+}
