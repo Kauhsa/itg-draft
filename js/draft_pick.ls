@@ -1,6 +1,6 @@
-getRandomCharts = (min, max) ->
+getRandomCharts = (min, max, count) ->
     charts = [chart for chart in CHARTDATA.charts when min <= chart.rating <= max]
-    charts = random_items charts, 5
+    charts = random_items charts, count
     Ember.A [Ember.Object.create(obj) for obj in charts]
 
 PICK_STATES = [
@@ -41,7 +41,7 @@ App.SettingsController = Ember.Controller.extend {
         pickingController.set 'playerOneName' this.get('playerOneName')
         pickingController.set 'playerTwoName' this.get('playerTwoName')
         pickingController.set 'currentStateIndex' 0
-        charts = getRandomCharts this.get('minimumRating'), this.get('maximumRating')
+        charts = getRandomCharts this.get('minimumRating'), this.get('maximumRating'), this.get('numberOfCharts')
         pickingController.set 'charts' charts
         this.transitionTo 'picking'
 }

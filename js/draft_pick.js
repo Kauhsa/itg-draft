@@ -1,5 +1,5 @@
 var getRandomCharts, PICK_STATES;
-getRandomCharts = function(min, max){
+getRandomCharts = function(min, max, count){
   var charts, res$, i$, ref$, len$, chart, ref1$, obj;
   res$ = [];
   for (i$ = 0, len$ = (ref$ = CHARTDATA.charts).length; i$ < len$; ++i$) {
@@ -9,7 +9,7 @@ getRandomCharts = function(min, max){
     }
   }
   charts = res$;
-  charts = random_items(charts, 5);
+  charts = random_items(charts, count);
   return Ember.A((function(){
     var i$, ref$, len$, results$ = [];
     for (i$ = 0, len$ = (ref$ = charts).length; i$ < len$; ++i$) {
@@ -56,7 +56,7 @@ App.SettingsController = Ember.Controller.extend({
     pickingController.set('playerOneName', this.get('playerOneName'));
     pickingController.set('playerTwoName', this.get('playerTwoName'));
     pickingController.set('currentStateIndex', 0);
-    charts = getRandomCharts(this.get('minimumRating'), this.get('maximumRating'));
+    charts = getRandomCharts(this.get('minimumRating'), this.get('maximumRating'), this.get('numberOfCharts'));
     pickingController.set('charts', charts);
     return this.transitionTo('picking');
   }
