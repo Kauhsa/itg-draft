@@ -2,9 +2,9 @@ var getRandomCharts, PICK_STATES;
 getRandomCharts = function(min, max, count){
   var charts, res$, i$, ref$, len$, chart, ref1$, obj;
   res$ = [];
-  for (i$ = 0, len$ = (ref$ = CHARTDATA.charts).length; i$ < len$; ++i$) {
+  for (i$ = 0, len$ = (ref$ = CHARTS).length; i$ < len$; ++i$) {
     chart = ref$[i$];
-    if ((min <= (ref1$ = chart.rating) && ref1$ <= max) && chart.style === 0) {
+    if ((min <= (ref1$ = chart.rating) && ref1$ <= max) && chart.style === 'Single') {
       res$.push(chart);
     }
   }

@@ -1,5 +1,5 @@
 getRandomCharts = (min, max, count) ->
-    charts = [chart for chart in CHARTDATA.charts when min <= chart.rating <= max and chart.style == 0]
+    charts = [chart for chart in CHARTS when min <= chart.rating <= max and chart.style == 'Single']
     charts = random_items charts, count
     Ember.A [Ember.Object.create(obj) for obj in charts]
 

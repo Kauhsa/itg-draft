@@ -22,19 +22,22 @@
         <script type="text/x-handlebars" data-template-name="settings">
             <div class="center_area">
                 <h1>Draft Pick Settings</h1>
-                <label>Player one name: {{view Ember.TextField valueBinding="playerOneName"}}</label>
-                <label>Player two name: {{view Ember.TextField valueBinding="playerTwoName"}}</label>
-                <label>Minimum block rating: {{view Ember.TextField valueBinding="minimumRating"}}</label>
-                <label>Maximum block rating: {{view Ember.TextField valueBinding="maximumRating"}}</label>
-                <label>Number of charts: {{view Ember.TextField valueBinding="numberOfCharts"}}</label>
-                <button {{action "goToPicking"}}>Go!</button>
+                <form>
+                    <label>Player one name: {{view Ember.TextField valueBinding="playerOneName"}}</label>
+                    <label>Player two name: {{view Ember.TextField valueBinding="playerTwoName"}}</label>
+                    <label>Minimum block rating: {{view Ember.TextField valueBinding="minimumRating"}}</label>
+                    <label>Maximum block rating: {{view Ember.TextField valueBinding="maximumRating"}}</label>
+                    <label>Number of charts: {{view Ember.TextField valueBinding="numberOfCharts"}}</label>
+                    <button {{action "goToPicking"}}>Go!</button>
+                </form>
             </div>
         </script>
 
         <script type="text/x-handlebars" data-template-name="picking">
             <div class="center_area">
                 <div class="player_names">
-                    <span {{bindAttr class=":player_name isPlayerOneTurn:active"}}>{{ playerOneName }}</span> versus
+                    <span {{bindAttr class=":player_name isPlayerOneTurn:active"}}>{{ playerOneName }}</span>
+                    <span class="vs_text">vs.</span>
                     <span {{bindAttr class=":player_name isPlayerTwoTurn:active"}}>{{ playerTwoName }}</span>
                 </div>
                 <span class="info_text">
@@ -46,7 +49,7 @@
                             <span class="downvote">downvote</span>
                         {{/if}}
                     {{else}}
-                        <span {{action "nextRandomChart"}}>Click here to draw a random chart!</span>
+                        <span {{action "nextRandomChart"}} class="clickable">Click here to draw a random chart!</span>
                     {{/if}}
                 </span>
                 {{#each c in charts}}
@@ -54,7 +57,7 @@
                         <div {{bindAttr class=":chart view.chart.player view.chart.action view.chart.drawn view.isCurrentlyDrawnChart:currently_drawn"}} {{action "clickChart" target="view"}}>
                             <span class="title">{{ view.chart.title }}</span>
                             <span class="subtitle">{{ view.chart.subtitle }}</span>
-                            <span class="rating expert">{{ view.chart.rating }}</span>
+                            <span class="rating">{{ view.chart.difficulty }}{{ view.chart.rating }}</span>
                         </div>
                     {{/view}}
                 {{/each}}
