@@ -17,23 +17,13 @@ App.Router.map ->
     this.resource 'picking' {path: 'pick/:player_one/:player_two/:min/:max/:count'}
 
 App.PickingRoute = Ember.Route.extend {
-    model: (params) -> {
-        'playerOne': params.player_one
-        'playerTwo': params.player_two
-        'min': params.min
-        'max': params.max
-        'count': params.count
-    }
-    serialize: (model) -> {
-        'player_one': model.playerOne
-        'player_two': model.playerTwo
-        'min': model.min
-        'max': model.max
-        'count': model.count
-    }
+    model: (params) ->
+        params
+    serialize: (model) ->
+        model
     setupController: (controller, model) ->
-        controller.set 'playerOneName' model.playerOne
-        controller.set 'playerTwoName' model.playerTwo
+        controller.set 'playerOneName' model.player_one
+        controller.set 'playerTwoName' model.player_two
         controller.set 'currentStateIndex' 0
         controller.set 'currentlyDrawnChart' null
         controller.set 'phase' 'picking'
@@ -68,8 +58,8 @@ App.SettingsController = Ember.Controller.extend {
     numberOfCharts: '5'
 
     pickingModel: (-> {
-        'playerOne': this.get 'playerOneName'
-        'playerTwo': this.get 'playerTwoName'
+        'player_one': this.get 'playerOneName'
+        'player_two': this.get 'playerTwoName'
         'min': this.get 'minimumRating'
         'max': this.get 'maximumRating'
         'count': this.get 'numberOfCharts'
