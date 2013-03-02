@@ -37,16 +37,20 @@
 
             <div class="center_area">
                 <span class="info_text">
-                    Waiting for
-                    {{#if isUpvoteTurn}}
-                        <span class="upvote">upvote</span>
+                    {{#if isPickingPhase}}
+                        Waiting for
+                        {{#if isUpvoteTurn}}
+                            <span class="upvote">upvote</span>
+                        {{else}}
+                            <span class="downvote">downvote</span>
+                        {{/if}}
                     {{else}}
-                        <span class="downvote">downvote</span>
+                        <span {{action "nextRandomChart"}}>Click here to draw a random chart!</span>
                     {{/if}}
                 </span>
                 {{#each c in charts}}
                     {{#view App.ChartView chartBinding="c" pickingControllerBinding="this"}}
-                        <div {{bindAttr class=":chart view.chart.player view.chart.action"}} {{action "clickChart" target="view"}}>
+                        <div {{bindAttr class=":chart view.chart.player view.chart.action view.chart.drawn view.isCurrentlyDrawnChart:currently_drawn"}} {{action "clickChart" target="view"}}>
                             <span class="title">{{ view.chart.title }}</span>
                             <span class="subtitle">{{ view.chart.subtitle }}</span>
                             <span class="rating expert">{{ view.chart.rating }}</span>
