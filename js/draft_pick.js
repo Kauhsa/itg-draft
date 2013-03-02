@@ -26,8 +26,36 @@ App.Router.map(function(){
     path: '/'
   });
   return this.resource('picking', {
-    path: '/pick'
+    path: 'pick/:player_one/:player_two/:min/:max/:count'
   });
+});
+App.PickingRoute = Ember.Route.extend({
+  model: function(params){
+    return {
+      'playerOne': params.player_one,
+      'playerTwo': params.player_two,
+      'min': params.min,
+      'max': params.max,
+      'count': params.count
+    };
+  },
+  serialize: function(model){
+    return {
+      'player_one': model.playerOne,
+      'player_two': model.playerTwo,
+      'min': model.min,
+      'max': model.max,
+      'count': model.count
+    };
+  },
+  setupController: function(controller, model){
+    controller.set('playerOneName', model.playerOne);
+    controller.set('playerTwoName', model.playerTwo);
+    controller.set('currentStateIndex', 0);
+    controller.set('currentlyDrawnChart', null);
+    controller.set('phase', 'picking');
+    return controller.set('charts', getRandomCharts(model.min, model.max, model.count));
+  }
 });
 App.ChartView = Ember.View.extend({
   chart: null,
@@ -56,17 +84,17 @@ App.SettingsController = Ember.Controller.extend({
   minimumRating: '9',
   maximumRating: '11',
   numberOfCharts: '5',
+  pickingModel: function(){
+    return {
+      'playerOne': this.get('playerOneName'),
+      'playerTwo': this.get('playerTwoName'),
+      'min': this.get('minimumRating'),
+      'max': this.get('maximumRating'),
+      'count': this.get('numberOfCharts')
+    };
+  }.property('playerOneName', 'playerTwoName', 'minimumRating', 'maximumRating', 'numberOfCharts'),
   goToPicking: function(){
-    var pickingController, charts;
-    pickingController = this.controllerFor('picking');
-    pickingController.set('playerOneName', this.get('playerOneName'));
-    pickingController.set('playerTwoName', this.get('playerTwoName'));
-    pickingController.set('currentStateIndex', 0);
-    pickingController.set('currentlyDrawnChart', null);
-    pickingController.set('phase', 'picking');
-    charts = getRandomCharts(this.get('minimumRating'), this.get('maximumRating'), this.get('numberOfCharts'));
-    pickingController.set('charts', charts);
-    return this.transitionTo('picking');
+    return this.transitionTo('picking', this.get('pickingModel'));
   }
 });
 App.PickingController = Ember.Controller.extend({

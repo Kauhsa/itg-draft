@@ -14,7 +14,31 @@ window.App = Ember.Application.create!
 
 App.Router.map ->
     this.route 'settings' {path: '/'}
-    this.resource 'picking' {path: '/pick'}
+    this.resource 'picking' {path: 'pick/:player_one/:player_two/:min/:max/:count'}
+
+App.PickingRoute = Ember.Route.extend {
+    model: (params) -> {
+        'playerOne': params.player_one
+        'playerTwo': params.player_two
+        'min': params.min
+        'max': params.max
+        'count': params.count
+    }
+    serialize: (model) -> {
+        'player_one': model.playerOne
+        'player_two': model.playerTwo
+        'min': model.min
+        'max': model.max
+        'count': model.count
+    }
+    setupController: (controller, model) ->
+        controller.set 'playerOneName' model.playerOne
+        controller.set 'playerTwoName' model.playerTwo
+        controller.set 'currentStateIndex' 0
+        controller.set 'currentlyDrawnChart' null
+        controller.set 'phase' 'picking'
+        controller.set 'charts' getRandomCharts model.min, model.max, model.count
+}
 
 App.ChartView = Ember.View.extend {
     chart: null
@@ -43,16 +67,16 @@ App.SettingsController = Ember.Controller.extend {
     maximumRating: '11'
     numberOfCharts: '5'
 
+    pickingModel: (-> {
+        'playerOne': this.get 'playerOneName'
+        'playerTwo': this.get 'playerTwoName'
+        'min': this.get 'minimumRating'
+        'max': this.get 'maximumRating'
+        'count': this.get 'numberOfCharts'
+    }).property('playerOneName', 'playerTwoName', 'minimumRating', 'maximumRating', 'numberOfCharts')
+
     goToPicking: ->
-        pickingController = this.controllerFor 'picking'
-        pickingController.set 'playerOneName' this.get('playerOneName')
-        pickingController.set 'playerTwoName' this.get('playerTwoName')
-        pickingController.set 'currentStateIndex' 0
-        pickingController.set 'currentlyDrawnChart' null
-        pickingController.set 'phase' 'picking'
-        charts = getRandomCharts this.get('minimumRating'), this.get('maximumRating'), this.get('numberOfCharts')
-        pickingController.set 'charts' charts
-        this.transitionTo 'picking'
+        this.transitionTo 'picking' this.get 'pickingModel'
 }
 
 App.PickingController = Ember.Controller.extend {
