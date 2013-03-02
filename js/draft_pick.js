@@ -1,4 +1,4 @@
-var getRandomCharts, PICK_STATES;
+var getRandomCharts, PICK_STATES, DOWNVOTE_WEIGHT, NORMAL_WEIGHT, UPVOTE_WEIGHT;
 getRandomCharts = function(min, max, count){
   var charts, res$, i$, ref$, len$, chart, ref1$, obj;
   res$ = [];
@@ -20,6 +20,9 @@ getRandomCharts = function(min, max, count){
   }()));
 };
 PICK_STATES = [['one', 'downvote'], ['two', 'downvote'], ['two', 'upvote'], ['one', 'upvote']];
+DOWNVOTE_WEIGHT = 1;
+NORMAL_WEIGHT = 4;
+UPVOTE_WEIGHT = 8;
 window.App = Ember.Application.create();
 App.Router.map(function(){
   this.route('settings', {
@@ -121,7 +124,7 @@ App.PickingController = Ember.Controller.extend({
     }
   },
   nextRandomChart: function(){
-    var chartsLeft, res$, i$, ref$, len$, chart, randomChart;
+    var chartsLeft, res$, i$, ref$, len$, chart, weightedChartsLeft, weight, randomChart;
     res$ = [];
     for (i$ = 0, len$ = (ref$ = this.get('charts')).length; i$ < len$; ++i$) {
       chart = ref$[i$];
@@ -133,7 +136,22 @@ App.PickingController = Ember.Controller.extend({
     if (chartsLeft.length === 0) {
       return;
     }
-    randomChart = random_items(chartsLeft, 1)[0];
+    weightedChartsLeft = [];
+    for (i$ = 0, len$ = chartsLeft.length; i$ < len$; ++i$) {
+      chart = chartsLeft[i$];
+      if (chart.action === 'upvote') {
+        weight = UPVOTE_WEIGHT;
+      } else if (chart.action === 'downvote') {
+        weight = DOWNVOTE_WEIGHT;
+      } else {
+        weight = NORMAL_WEIGHT;
+      }
+      weightedChartsLeft.push({
+        weight: weight,
+        item: chart
+      });
+    }
+    randomChart = weighted_random_item(weightedChartsLeft);
     randomChart.set('drawn', true);
     return this.set('currentlyDrawnChart', randomChart);
   }

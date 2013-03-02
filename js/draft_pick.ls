@@ -10,6 +10,10 @@ PICK_STATES = [
     ['one', 'upvote']
 ]
 
+DOWNVOTE_WEIGHT = 1
+NORMAL_WEIGHT = 4
+UPVOTE_WEIGHT = 8
+
 window.App = Ember.Application.create!
 
 App.Router.map ->
@@ -108,7 +112,21 @@ App.PickingController = Ember.Controller.extend {
         chartsLeft = [chart for chart in this.get('charts') when not chart.drawn]
         if chartsLeft.length == 0
             return
-        randomChart = random_items(chartsLeft, 1)[0]
-        randomChart.set('drawn', true)
-        this.set('currentlyDrawnChart', randomChart)
+
+        weightedChartsLeft = []
+        for chart in chartsLeft
+            if chart.action == 'upvote'
+                weight = UPVOTE_WEIGHT
+            else if chart.action == 'downvote'
+                weight = DOWNVOTE_WEIGHT
+            else
+                weight = NORMAL_WEIGHT
+            weightedChartsLeft.push {
+                weight: weight
+                item: chart
+            }
+
+        randomChart = weighted_random_item weightedChartsLeft
+        randomChart.set 'drawn', true
+        this.set 'currentlyDrawnChart', randomChart
 }

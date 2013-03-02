@@ -1,4 +1,4 @@
-var random_number, random_items, unique_values;
+var random_number, random_items, random_item, unique_values, weighted_random_item;
 random_number = function(min, max){
   return Math.floor(Math.random() * (max - min)) + min;
 };
@@ -16,6 +16,11 @@ random_items = function(array, count){
     results$.push(array[i]);
   }
   return results$;
+};
+random_item = function(array){
+  var index;
+  index = random_number(0, array.length);
+  return array[index];
 };
 unique_values = function(obj){
   var values, i$, len$, item, key, val, results$ = {};
@@ -35,6 +40,18 @@ unique_values = function(obj){
     results$[key] = Object.keys(val);
   }
   return results$;
+};
+weighted_random_item = function(array){
+  var item_list, i$, len$, item, j$, to$, x;
+  item_list = [];
+  for (i$ = 0, len$ = array.length; i$ < len$; ++i$) {
+    item = array[i$];
+    for (j$ = 0, to$ = item['weight']; j$ < to$; ++j$) {
+      x = j$;
+      item_list.push(item['item']);
+    }
+  }
+  return random_item(item_list);
 };
 function in$(x, arr){
   var i = -1, l = arr.length >>> 0;
