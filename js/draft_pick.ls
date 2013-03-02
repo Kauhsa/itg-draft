@@ -51,12 +51,22 @@ App.PickingController = Ember.Controller.extend {
     playerTwoName: null
     charts: null
     currentStateIndex: 0
+
     currentState: (->
         PICK_STATES[this.get 'currentStateIndex']).property('currentStateIndex')
+
     isPlayerOneTurn: (->
         this.get('currentState')[0] == 'one').property('currentState')
+
     isPlayerTwoTurn: (->
         this.get('currentState')[0] == 'two').property('currentState')
+
+    isBanTurn: (->
+        this.get('currentState')[1] == 'ban').property('currentState')
+
+    isFavorTurn: (->
+        this.get('currentState')[1] == 'favor').property('currentState')
+
     nextState: ->
         this.set('currentStateIndex', this.get('currentStateIndex') + 1)
 }

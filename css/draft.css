@@ -51,8 +51,20 @@ label {
 }
 
 .info_text {
-    font-size: 14pt;
+    font-size: 15pt;
     opacity: 0.8;
+}
+
+.info_text .ban, .info_text .favor {
+    font-weight: bold;
+}
+
+.info_text .ban {
+    color: #F00;
+}
+
+.info_text .favor {
+    color: #0F0;
 }
 
 .chart {

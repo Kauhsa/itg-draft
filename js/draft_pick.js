@@ -75,6 +75,12 @@ App.PickingController = Ember.Controller.extend({
   isPlayerTwoTurn: function(){
     return this.get('currentState')[0] === 'two';
   }.property('currentState'),
+  isBanTurn: function(){
+    return this.get('currentState')[1] === 'ban';
+  }.property('currentState'),
+  isFavorTurn: function(){
+    return this.get('currentState')[1] === 'favor';
+  }.property('currentState'),
   nextState: function(){
     return this.set('currentStateIndex', this.get('currentStateIndex') + 1);
   }

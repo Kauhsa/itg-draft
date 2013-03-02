@@ -36,7 +36,14 @@
             <span {{bindAttr class=":player_name :two isPlayerTwoTurn:active"}}>{{ playerTwoName }}</span>
 
             <div class="center_area">
-                <span class="info_text"></span>
+                <span class="info_text">
+                    Waiting for
+                    {{#if isBanTurn}}
+                        <span class="ban">ban</span>
+                    {{else}}
+                        <span class="favor">favor</span>
+                    {{/if}}
+                </span>
                 {{#each c in charts}}
                     {{#view App.ChartView chartBinding="c" pickingControllerBinding="this"}}
                         <div {{bindAttr class=":chart view.chart.player view.chart.action"}} {{action "clickChart" target="view"}}>
