@@ -62,6 +62,13 @@ body {
     -webkit-transition: all 0.4s ease;
     cursor: pointer;
     border-radius: 15px;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .chart:hover {
@@ -73,12 +80,25 @@ body {
     font-size: 16pt;
 }
 
+.chart .rating {
+    font-weight: bold;
+    font-size: 18pt;
+}
+
+.chart .rating.expert {
+    color: #ddf;
+}
+
 .chart.ban {
     background-color: rgba(150, 0, 0, 0.2);
 }
 
 .chart.favor {
     background-color: rgba(0, 150, 0, 0.2);
+}
+
+.chart.one, .chart.two {
+    cursor: default;
 }
 
 .chart.one {
